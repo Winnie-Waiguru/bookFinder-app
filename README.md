@@ -2,7 +2,6 @@
 
 A React-based web application that allows users to search for books, view details, save favorites, get genre-based recommendations, and download a reading list to share with friends.
 
----
 
 ## Project Idea
 
@@ -14,7 +13,7 @@ The **Book Library Application** is designed to make book discovery and sharing 
 - Get **genre-based recommendations** from favorites
 - **Download** a list of read books in `.txt` or `.pdf` format for sharing
 
----
+
 
 ## Key Features
 
@@ -44,13 +43,13 @@ The **Book Library Application** is designed to make book discovery and sharing 
 - Mark books as **Read**
 - Export reading list as `.txt` or `.pdf` for sharing
 
----
+
 
 ## API
 
 - **Google Books API** – Used for searching and retrieving book data.
 
----
+
 
 ## React Components
 
@@ -67,7 +66,7 @@ The **Book Library Application** is designed to make book discovery and sharing 
 | **ReadListDownload** | Exports user's read list                    |
 | **Footer**           | Application footer                          |
 
----
+
 
 ## Tech Stack
 
@@ -75,7 +74,6 @@ The **Book Library Application** is designed to make book discovery and sharing 
 - **API:** Google Books API
 - **Deployment:** Vercel
 
----
 
 ## Installation
 
