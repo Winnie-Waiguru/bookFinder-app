@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+.nav-items {
+  @apply hover:text-[#0370A6];
+}
+
+.icon {
+  @apply w-28 h-28 text-[#868A88] hidden;
+}
