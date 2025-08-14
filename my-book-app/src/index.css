@@ -4,6 +4,10 @@
   @apply hover:text-[#0370A6];
 }
 
+.sideItems-hover {
+  @apply w-full p-6 text-center hover:text-[#ffffff] hover:bg-[#0370A6];
+}
+
 .icon {
-  @apply w-28 h-28 text-[#868A88] hidden;
+  @apply text-2xl text-[#868A88] cursor-pointer;
 }
