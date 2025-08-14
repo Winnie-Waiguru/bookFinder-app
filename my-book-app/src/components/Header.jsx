@@ -9,20 +9,22 @@ function Header() {
     <header
       className={`${
         isActive
-          ? "w-[300px] bg-[#F7FCFF] rounded-tr-4xl"
+          ? "w-[300px] bg-[#F7FCFF] rounded-tr-4xl shadow-[2px_0_2px_rgba(0,0,0,0.2)]"
           : "w-full bg-transparent"
       } relative`}
     >
-      <nav className=" px-6 py-4  h-16 flex justify-between items-center">
+      <nav className=" py-4  h-16 flex justify-between items-center md:px-12">
         <img
-          className={`w-24 h-12 ${isActive && "hidden"} md:block`}
+          className={`w-24 h-12 ${
+            isActive && "hidden"
+          } md:block md:w-28 md:h-14`}
           src="\Logo.png"
           alt="bookapp-logo"
         />
 
         {/* Desktop Menu */}
 
-        <ul className=" hidden font-bold md:flex flex-row gap-20 text-xl px-10">
+        <ul className=" hidden font-bold md:flex flex-row gap-20 text-xl px-4">
           <li className="nav-items">
             <a href="">Home</a>
           </li>
@@ -36,7 +38,7 @@ function Header() {
 
         {/* Mobile View menu */}
         {isActive && (
-          <div className="absolute top-[64px] left-0 bg-[#F7FCFF] w-[300px] font-bold ">
+          <div className="absolute top-[64px] left-0 bg-[#F7FCFF] w-[300px] font-bold shadow-[2px_0_2px_rgba(0,0,0,0.2)]">
             <ul className="flex flex-col gap-6 h-screen items-center justify-evenly ">
               <li className="sideItems-hover">
                 <a href="">Home</a>
