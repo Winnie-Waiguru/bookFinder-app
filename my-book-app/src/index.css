@@ -11,3 +11,7 @@
 .icon {
   @apply text-2xl text-[#868A88] cursor-pointer;
 }
+
+.p-style {
+  @apply text-base  text-[#212121] mt-6 md:mt-4;
+}

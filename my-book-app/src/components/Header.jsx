@@ -13,7 +13,7 @@ function Header() {
           : "w-full bg-transparent"
       } relative`}
     >
-      <nav className=" py-4  h-16 flex justify-between items-center md:px-12">
+      <nav className=" py-4  h-16 flex justify-between items-center ">
         <img
           className={`w-24 h-12 ${
             isActive && "hidden"
