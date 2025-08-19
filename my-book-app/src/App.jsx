@@ -1,6 +1,6 @@
 import Header from "./components/Header";
 import SearchBar from "./components/searchBar";
-import BookCard from "./components/bookCard";
+import Carousel from "./components/Carousel";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <h1 className="text-xl md:text-2xl font-bold mt-6 text-[#212121]">
         Recommended Books
       </h1>
-      <BookCard />
+      <Carousel />
     </div>
   );
 }
