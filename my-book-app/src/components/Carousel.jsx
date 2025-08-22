@@ -6,15 +6,39 @@ function Carousel({ books = [] }) {
   const carouselRef = useRef(null);
   const [dragDirection, setDragDirection] = useState("x"); //drag direction default set to large screens
 
+  // Get book cover
   const getCoverUrl = (book) => {
     if (book?.cover_i) {
       return `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`;
     }
+    if (book.cover) {
+      return book.cover; // already a full URL from getRecommendedBooks
+    }
     // simple placeholder
-    return `https://via.placeholder.com/188x236?text=No+Cover`;
+    return `https://placehold.co/150x220?text=No+Cover`;
   };
 
-  //   Detect window resize
+  // Format the length of the authors name
+  const formatAuthors = (authors, maxLength = 40) => {
+    if (!authors) return "Unknown author";
+
+    // check if is an array of authors
+    let joined = Array.isArray(authors) ? authors.join(",") : authors;
+
+    if (joined.length <= maxLength) return joined;
+
+    // Slice the  joined array if long
+    let truncted = joined.slice(0, maxLength);
+
+    // check if it has cut mid-character
+    if (joined[maxLength] !== " ") {
+      truncted = truncted.slice(0, truncted.lastIndexOf(" "));
+    }
+
+    return truncted + " ...";
+  };
+
+  //Detect window resize
   useEffect(() => {
     const updateDrag = () => {
       if (window.innerWidth < 768) {
@@ -35,22 +59,25 @@ function Carousel({ books = [] }) {
     <div className="h-auto md:h-[440px] md:max-w-[2000px] mt-6 mx-auto ">
       <div
         ref={carouselRef}
-        className="h-full flex items-center justify-center overflow-hidden"
+        className="h-full flex items-center justify-center overflow-hidden md:overflow-hidden overflow-y-auto md:overflow-y-hidden"
       >
         <motion.div
           className="flex flex-col md:flex-row gap-12 md:gap-20 px-4"
-          drag={dragDirection}
-          dragConstraints={carouselRef}
+          drag={dragDirection === "x" ? "x" : false}
+          dragConstraints={dragDirection === "x" ? carouselRef : undefined}
           dragElastic={0.2}
         >
-          {books.map((book) => (
-            <div className="bookItem" key={book.key}>
+          {books.map((book, index) => (
+            <div
+              className="bookItem"
+              key={
+                book.key || `${book.title}-${book.author || "unknown"}-${index}`
+              }
+            >
               <BookCard
                 img={getCoverUrl(book)}
                 title={book.title}
-                author={
-                  book.author_name?.join(",").slice(0, 20) || "Unknown author"
-                }
+                author={formatAuthors(book.author_name || book.author, 40)}
               />
             </div>
           ))}

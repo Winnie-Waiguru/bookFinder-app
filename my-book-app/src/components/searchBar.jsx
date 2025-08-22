@@ -1,13 +1,46 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Carousel from "./Carousel";
-import { searchBooksByTitleAndAuthor } from "../services/openLibrary";
+import {
+  searchBooksByTitleAndAuthor,
+  getRecommendedBooks,
+} from "../services/openLibrary";
 
 function SearchBar() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
+  const [randomSubject, setRandomSubject] = useState("");
+
+  useEffect(() => {
+    const loadRecommendations = async () => {
+      setLoading(true);
+
+      const subject = [
+        "fiction",
+        "fantasy",
+        "romance",
+        "history",
+        "science",
+        "mystery",
+        "art",
+        "biography",
+      ];
+
+      let category = subject[Math.floor(Math.random() * subject.length)];
+      setRandomSubject(category);
+      console.log(category);
+      const recommended = await getRecommendedBooks(category);
+      setBooks(recommended);
+      setLoading(false);
+    };
+
+    if (!hasSearched) {
+      loadRecommendations();
+    }
+  }, [hasSearched]);
 
   const handleSearch = async (event) => {
     event.preventDefault(); //prevent form from reloading the page
@@ -15,6 +48,8 @@ function SearchBar() {
 
     setLoading(true);
     setError(null);
+    setHasSearched(true);
+
     try {
       const fetchedBooks = await searchBooksByTitleAndAuthor(searchTerm);
       setBooks(fetchedBooks);
@@ -30,7 +65,6 @@ function SearchBar() {
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-    console.log(`${searchTerm}`); //Testing purposes
   };
 
   return (
@@ -45,7 +79,11 @@ function SearchBar() {
             className="w-3/4 h-[60px] md:h-[64px] p-3 focus:outline-none"
           />
           <button type="submit" disabled={loading} className="icon md:hidden">
-            {loading ? "Searching... " : <FaMagnifyingGlass />}
+            {loading ? (
+              <span className="text-sm">Searching...</span>
+            ) : (
+              <FaMagnifyingGlass />
+            )}
           </button>
           <button
             type="submit"
@@ -57,9 +95,13 @@ function SearchBar() {
         </div>
       </form>
       {error && <p>{error}</p>}
-      <h2 className="text-xl md:text-2xl font-bold mt-6 text-[#212121]">
-        Results
-      </h2>
+      {!hasSearched ? (
+        <h1 className="h1-style">{`Recommended Books ~ ${randomSubject
+          .charAt(0)
+          .toUpperCase()}${randomSubject.slice(1)}`}</h1>
+      ) : (
+        <h1 className="h1-style">Results</h1>
+      )}
 
       {loading && <p>Loading... </p>}
 

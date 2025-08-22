@@ -6,6 +6,26 @@ const api = axios.create({
   timeout: 15000,
 });
 
+export const getRecommendedBooks = async (subject = "fantasy") => {
+  try {
+    const response = await api.get(`/subjects/${subject}.json?limit=14`);
+
+    const data = response.data.works;
+    console.log(data); //testing purposes
+
+    return data.map((book) => ({
+      title: book.title,
+      author: book.authors?.[0]?.name || "Unknown author",
+      cover: book.cover_id
+        ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
+        : "https://placehold.co/150x220?text=No+Cover",
+    }));
+  } catch (error) {
+    console.error(`No books found! ${error}`);
+    return [];
+  }
+};
+
 //Search for book title or author
 export const searchBooks = async (query, type = "title") => {
   const q = query.trim();
