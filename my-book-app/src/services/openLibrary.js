@@ -11,7 +11,6 @@ export const getRecommendedBooks = async (subject = "fantasy") => {
     const response = await api.get(`/subjects/${subject}.json?limit=14`);
 
     const data = response.data.works;
-    console.log(data); //testing purposes
 
     return data.map((book) => ({
       title: book.title,

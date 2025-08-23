@@ -3,8 +3,9 @@ import BookCard from "./bookCard";
 import { motion } from "framer-motion";
 
 function Carousel({ books = [] }) {
-  const carouselRef = useRef(null);
-  const [dragDirection, setDragDirection] = useState("x"); //drag direction default set to large screens
+  const containerRef = useRef(null);
+  const [axis, setAxis] = useState("x"); //drag direction default set to large screens
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
 
   // Get book cover
   const getCoverUrl = (book) => {
@@ -38,41 +39,53 @@ function Carousel({ books = [] }) {
     return truncted + " ...";
   };
 
-  //Detect window resize
+  //Detect Axis
   useEffect(() => {
-    const updateDrag = () => {
+    const updateAxis = () => {
       if (window.innerWidth < 768) {
-        setDragDirection("y"); //small screens
+        setAxis("y"); //small screens
       } else {
-        setDragDirection("x");
+        setAxis("x");
       }
     };
 
-    updateDrag(); //run at Mount
-    window.addEventListener("resize", updateDrag);
-    return () => window.removeEventListener("resize", updateDrag);
+    updateAxis(); //run at Mount
+    window.addEventListener("resize", updateAxis);
+    return () => window.removeEventListener("resize", updateAxis);
   }, []);
+
+  // Measure overflow and set constraints
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const el = containerRef.current;
+
+    if (axis === "x") {
+      const overflow = el.scrollWidth - el.clientWidth;
+      setConstraints({ left: -overflow, right: 0 });
+    } else {
+      const overflow = el.scrollHeight - el.clientHeight;
+      setConstraints({ top: 0, bottom: -overflow });
+    }
+  }, [books, axis]);
 
   if (!books.length) return null;
 
   return (
-    <div className="h-auto md:h-[440px] md:max-w-[2000px] mt-6 mx-auto ">
+    <div className="h-auto md:h-[440px] mt-6 mx-auto ">
       <div
-        ref={carouselRef}
-        className="h-full flex items-center justify-center overflow-hidden md:overflow-hidden overflow-y-auto md:overflow-y-hidden"
+        ref={containerRef}
+        className="h-full flex md:items-center md:justify-center overflow-hidden"
       >
         <motion.div
           className="flex flex-col md:flex-row gap-12 md:gap-20 px-4"
-          drag={dragDirection === "x" ? "x" : false}
-          dragConstraints={dragDirection === "x" ? carouselRef : undefined}
+          drag={axis}
+          dragConstraints={constraints}
           dragElastic={0.2}
         >
           {books.map((book, index) => (
             <div
               className="bookItem"
-              key={
-                book.key || `${book.title}-${book.author || "unknown"}-${index}`
-              }
+              key={book.key || `${book.title}-${index}`}
             >
               <BookCard
                 img={getCoverUrl(book)}

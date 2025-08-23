@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import SearchBar from "./components/searchBar";
 import Carousel from "./components/Carousel";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Header />
       <SearchBar />
       <Carousel />
+      <Footer />
     </div>
   );
 }
