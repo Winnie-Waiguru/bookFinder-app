@@ -31,7 +31,7 @@ function SearchBar() {
 
       let category = subject[Math.floor(Math.random() * subject.length)];
       setRandomSubject(category);
-      console.log(category);
+
       const recommended = await getRecommendedBooks(category);
       setBooks(recommended);
       setLoading(false);
@@ -68,7 +68,7 @@ function SearchBar() {
   };
 
   return (
-    <div>
+    <div className="px-4">
       <form onSubmit={handleSearch}>
         <div className="mt-2 m-auto border border-[#0370A6] rounded-xl pr-3 flex justify-between md:w-2xl lg:w-4xl xl:w-5xl h-[60px] md:h-[64px] items-center">
           <input
@@ -96,11 +96,11 @@ function SearchBar() {
       </form>
       {error && <p>{error}</p>}
       {!hasSearched ? (
-        <h1 className="h1-style">{`Recommended Books ~ ${randomSubject
+        <h1 className="h1-style mt-6 md:px-12">{`Recommended Books ~ ${randomSubject
           .charAt(0)
           .toUpperCase()}${randomSubject.slice(1)}`}</h1>
       ) : (
-        <h1 className="h1-style">Results</h1>
+        <h1 className="h1-style mt-6 md:px-12">Results</h1>
       )}
 
       {loading && <p>Loading... </p>}

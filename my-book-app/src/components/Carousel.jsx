@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import BookCard from "./bookCard";
 import { motion } from "framer-motion";
 
@@ -74,7 +75,7 @@ function Carousel({ books = [] }) {
     <div className="h-auto md:h-[440px] mt-6 mx-auto ">
       <div
         ref={containerRef}
-        className="h-full flex md:items-center md:justify-center overflow-hidden"
+        className="h-full flex md:items-center md:justify-center overflow-hidden "
       >
         <motion.div
           className="flex flex-col md:flex-row gap-12 md:gap-20 px-4"
@@ -87,11 +88,16 @@ function Carousel({ books = [] }) {
               className="bookItem"
               key={book.key || `${book.title}-${index}`}
             >
-              <BookCard
-                img={getCoverUrl(book)}
-                title={book.title}
-                author={formatAuthors(book.author_name || book.author, 40)}
-              />
+              {book.key && (
+                <Link to={`/book/${book.key}`}>
+                  <BookCard
+                    img={getCoverUrl(book)}
+                    title={book.title}
+                    author={formatAuthors(book.author_name || book.author, 40)}
+                  />
+                </Link>
+              )}
+              {/* Making the book clickable and retrieving path */}
             </div>
           ))}
         </motion.div>

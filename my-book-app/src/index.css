@@ -9,11 +9,15 @@
 }
 
 .icon {
-  @apply text-2xl text-[#868A88] cursor-pointer;
+  @apply text-xl text-[#868A88] cursor-pointer;
 }
 
-.h1-style{
-  @apply text-xl md:text-2xl font-bold mt-6 text-[#212121]
+.h1-style {
+  @apply text-xl md:text-2xl font-bold  text-[#212121];
+}
+
+.h2-style {
+  @apply text-[24px] md:text-[28px] font-bold mb-6;
 }
 
 .p-style {
