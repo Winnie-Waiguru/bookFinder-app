@@ -83,23 +83,25 @@ function Carousel({ books = [] }) {
           dragConstraints={constraints}
           dragElastic={0.2}
         >
-          {books.map((book, index) => (
-            <div
-              className="bookItem"
-              key={book.key || `${book.title}-${index}`}
-            >
-              {book.key && (
-                <Link to={`/book/${book.key}`}>
+          {books.map((book, index) => {
+            const bookId = book.key.split("/").pop();
+            return (
+              <div
+                className="bookItem"
+                key={book.key || `${book.title}-${index}`}
+              >
+                <Link to={`/book/${bookId}`}>
                   <BookCard
                     img={getCoverUrl(book)}
                     title={book.title}
                     author={formatAuthors(book.author_name || book.author, 40)}
                   />
                 </Link>
-              )}
-              {/* Making the book clickable and retrieving path */}
-            </div>
-          ))}
+
+                {/* Making the book clickable and retrieving path */}
+              </div>
+            );
+          })}
         </motion.div>
       </div>
     </div>

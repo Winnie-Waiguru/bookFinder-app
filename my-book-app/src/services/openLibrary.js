@@ -9,11 +9,11 @@ const api = axios.create({
 export const getRecommendedBooks = async (subject = "fantasy") => {
   try {
     const response = await api.get(`/subjects/${subject}.json?limit=14`);
-
     const data = response.data.works;
-    console.log(data);
+    console.log("recommended books data", data);
 
     return data.map((book) => ({
+      key: book.key,
       title: book.title,
       author: book.authors?.[0]?.name || "Unknown author",
       cover: book.cover_id
@@ -39,7 +39,15 @@ export const searchBooks = async (query, type = "title") => {
       endpoint += `q=${encodeURIComponent(query)}`;
     }
     const response = await api.get(`${endpoint}`);
-    return response.data.docs; // 'docs' contains the array of book results
+    const results = response.data.docs; // 'docs' contains the array of book results
+    return results.map((book) => ({
+      key: book.key,
+      title: book.title,
+      author: book.author_name?.[0] || "Unknown author",
+      cover: book.cover_i
+        ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+        : "https://placehold.co/150x220?text=No+Cover",
+    }));
   } catch (error) {
     console.error("Error fetching books:", error);
     return [];
@@ -63,4 +71,39 @@ export const searchBooksByTitleAndAuthor = async (query) => {
   });
 
   return Array.from(mergedResultsMap.values());
+};
+
+// Search for  book details using works id
+export const getBookDetails = async (id) => {
+  try {
+    const results = await api.get(`/works/${id}.json`);
+    return results.data;
+  } catch (error) {
+    console.log("Error fetching book details: ", error);
+    throw error;
+  }
+};
+
+// fetch author name
+export const getAuthorName = async (authorKey) => {
+  try {
+    const results = await api.get(`https://openlibrary.org${authorKey}.json`);
+    return results.data;
+  } catch (error) {
+    console.log("Error getting authors name: ", error);
+    throw error;
+  }
+};
+
+//fetch book edition for  book
+export const getBookEditions = async (bookId) => {
+  try {
+    const results = await api.get(
+      `https://openlibrary.org/works/${bookId}/editions.json?limit=1`
+    );
+    return results.data;
+  } catch (error) {
+    console.log("Error retrieving Isbn: ", error);
+    throw error;
+  }
 };

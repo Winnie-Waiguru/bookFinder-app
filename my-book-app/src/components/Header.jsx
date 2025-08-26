@@ -50,13 +50,6 @@ function Header() {
               <Link to={"/downloads"} className="sideItems-hover">
                 Downloads
               </Link>
-
-              <li className="sideItems-hover">
-                <a href=""></a>
-              </li>
-              <li className="sideItems-hover">
-                <a href="">Download List</a>
-              </li>
             </ul>
           </div>
         )}

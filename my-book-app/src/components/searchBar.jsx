@@ -68,10 +68,11 @@ function SearchBar() {
   };
 
   return (
-    <div className="px-4">
+    <div className="px-6">
       <form onSubmit={handleSearch}>
         <div className="mt-2 m-auto border border-[#0370A6] rounded-xl pr-3 flex justify-between md:w-2xl lg:w-4xl xl:w-5xl h-[60px] md:h-[64px] items-center">
           <input
+            name="search"
             type="text"
             placeholder="Search by title or author"
             value={searchTerm}
