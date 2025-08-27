@@ -104,10 +104,12 @@ function SearchBar() {
         <h1 className="h1-style mt-6 md:px-12">Results</h1>
       )}
 
-      {loading && <p>Loading... </p>}
+      {loading && <p className="px-6 md:px-12">Loading... </p>}
 
       {!loading && books.length > 0 && <Carousel books={books} />}
-      {!loading && !error && books.length === 0 && <p>No books found</p>}
+      {!loading && !error && books.length === 0 && (
+        <p className="px-6 md:px-12">No books found</p>
+      )}
     </div>
   );
 }

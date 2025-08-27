@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const BASE_URL = import.meta.env.VITE_APP_OPENLIBRARY_BASE_URL;
 
 const api = axios.create({
@@ -10,7 +11,6 @@ export const getRecommendedBooks = async (subject = "fantasy") => {
   try {
     const response = await api.get(`/subjects/${subject}.json?limit=14`);
     const data = response.data.works;
-    console.log("recommended books data", data);
 
     return data.map((book) => ({
       key: book.key,
@@ -77,7 +77,27 @@ export const searchBooksByTitleAndAuthor = async (query) => {
 export const getBookDetails = async (id) => {
   try {
     const results = await api.get(`/works/${id}.json`);
-    return results.data;
+    const book = results.data;
+
+    let authorName = "Unknown author";
+    if (book.authors && book.authors.length > 0) {
+      let authorKey = book.authors[0].author.key;
+      let authorData = await getAuthorName(authorKey);
+      authorName = authorData.name || "Unknown author";
+    }
+
+    return {
+      key: book.key,
+      title: book.title,
+      cover: `https://covers.openlibrary.org/b/id/${book.covers?.[0]}-M.jpg`,
+      author: authorName,
+      description:
+        typeof book.description === "string"
+          ? book.description
+          : book.description?.value || "No description",
+      publish_date: book.first_publish_date || "Not found",
+      subjects: book.subjects?.slice(0, 3).join(",") || "Not found",
+    };
   } catch (error) {
     console.log("Error fetching book details: ", error);
     throw error;

@@ -13,7 +13,7 @@
 }
 
 .h1-style {
-  @apply text-xl md:text-2xl font-bold  text-[#212121];
+  @apply text-[24px] md:text-[32px] font-bold  text-[#212121];
 }
 
 .h2-style {
