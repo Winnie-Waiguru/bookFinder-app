@@ -12,7 +12,6 @@ The **Book Library Application** is designed to make book discovery and sharing 
 - **View details** such as title, author, cover, and description
 - **Favorite** books (saved locally, no login required)
 - Get **genre-based recommendations** from favorites
-- **Download** a list of read books in `.txt` or `.pdf` format for sharing
 
 ---
 
@@ -26,10 +25,12 @@ The **Book Library Application** is designed to make book discovery and sharing 
 ### 2. View Book Details
 
 - Click a book to see:
+  - Title
+  - Author
   - Description
   - Publication date
-  - Page count
-  - Preview link
+  - ISBN
+  - Subjects
 
 ### 3. Favorite Books
 
@@ -37,42 +38,36 @@ The **Book Library Application** is designed to make book discovery and sharing 
 
 ### 4. Recommendations
 
-- Generate suggestions based on genres in the user’s favorites
-
-### 5. Download Read List
-
-- Mark books as **Read**
-- Export reading list as `.txt` or `.pdf` for sharing
+- Generate suggestions on the landing page [mystery, fantasy, art, science etc.]
 
 ---
 
 ## API
 
-- **Google Books API** – Used for searching and retrieving book data.
+- **Open Library API** – Used for searching and retrieving book data.
 
 ---
 
 ## React Components
 
-| Component            | Description                                 |
-| -------------------- | ------------------------------------------- |
-| **App**              | Root component & routing                    |
-| **Header**           | Navigation & branding                       |
-| **SearchBar**        | Input field for search queries              |
-| **BookList**         | Displays search or recommended books        |
-| **BookCard**         | Small preview (image, title, author, genre) |
-| **BookDetail**       | Detailed book info                          |
-| **Favorites**        | List of favorited books                     |
-| **Recommendations**  | Suggested books from user preferences       |
-| **ReadListDownload** | Exports user's read list                    |
-| **Footer**           | Application footer                          |
+| Component           | Description                          |
+| ------------------- | ------------------------------------ |
+| **App**             | Root component & routing             |
+| **Header**          | Navigation & branding                |
+| **SearchBar**       | Input field for search queries       |
+| **BookList**        | Displays search or recommended books |
+| **BookCard**        | Small preview (image, title, author) |
+| **BookDetail**      | Detailed book info                   |
+| **Favorites**       | List of favorited books              |
+| **Recommendations** | Suggested books                      |
+| **Footer**          | Application footer                   |
 
 ---
 
 ## Tech Stack
 
 - **Frontend:** React, Tailwind CSS
-- **API:** Google Books API
+- **API:** Open Library API
 - **Deployment:** Vercel
 
 ---
@@ -84,7 +79,7 @@ The **Book Library Application** is designed to make book discovery and sharing 
 git clone https://github.com/Winnie-Waiguru/book-library-app.git
 
 # Navigate to the project directory
-cd book-library-app
+cd my-book-app
 
 # Install dependencies
 npm install
