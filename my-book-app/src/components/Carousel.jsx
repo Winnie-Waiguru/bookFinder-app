@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import BookCard from "./bookCard";
+import BookCard from "./BookCard";
 import { motion } from "framer-motion";
 
 function Carousel({ books = [] }) {
