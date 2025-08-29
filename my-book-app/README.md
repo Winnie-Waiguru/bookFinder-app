@@ -1,6 +1,6 @@
 # Book Library Application
 
-A React-based web application that allows users to search for books, view details, save favorites, get genre-based recommendations, and download a reading list to share with friends.
+A React-based web application that allows users to search for books, view details, save favorites, get genre-based recommendations.
 
 ---
 
